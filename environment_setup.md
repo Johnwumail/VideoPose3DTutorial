@@ -143,9 +143,9 @@ Visit https://pytorch.org/get-started/locally/ and install by followin selection
   - python 3.6
   - cuda 10.1
 
-Install Pytorch
-```bash
-pip3 install torch torchvision
-```
+  Install Pytorch
+  ```bash
+  pip3 install torch torchvision
+  ```
 
 
