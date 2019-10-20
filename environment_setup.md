@@ -1,6 +1,11 @@
 # Environment Setup
-GPU: Nvidia 1080Ti
-OS: Ubuntu 18.04
+My env
+- GPU: Nvidia 1080Ti
+- OS: Ubuntu 18.04
+VideoPose3D need pytorch installed. I will install following items
+- nvidia driver for GPU
+- cuda 10.1
+- pytorch
 
 ## Install nvidia driver
 - detect the model of nvidia graphic card and the recommended driver
@@ -95,6 +100,7 @@ linux-headers-5.0.0-31-generic set to manually installed.
 ```
 
 - Install CUDA from nvida website
+I install the latest version is CUDA Toolkit 10.1 Update 2 
 
 https://developer.nvidia.com/cuda-download
 
@@ -115,6 +121,31 @@ I add following lines into ~/.profile
 export PATH=/usr/local/cuda-10.1/bin:/usr/local/cuda-10.1/NsightCompute-2019.1${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64\
                          ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+```
+
+## Install Pytorch
+- create & enable virutal env
+```bash
+# Install python virtual environment
+sudo apt-get install python3-venv
+# Create virtual environment
+python3 -m venv videopose3d_env
+# Enbale virtual environment
+source videopose3d_env/bin/activate
+(videopose3d_env) john@john-All-Series:~/Documents$
+```
+
+- Install Pytorch
+Visit https://pytorch.org/get-started/locally/ and install by followin selection
+  - Stable 1.3
+  - Linux
+  - pip
+  - python 3.6
+  - cuda 10.1
+
+Install Pytorch
+```bash
+pip3 install torch torchvision
 ```
 
 
