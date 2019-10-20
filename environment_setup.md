@@ -46,3 +46,75 @@ Sun Oct 20 09:55:04 2019
 +-----------------------------------------------------------------------------+
 
 ```
+
+## Install CUDA
+- Verify environment
+Go through the https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html document and verify if the precondition is meet.
+Here is the output on my env
+```
+john@john-All-Series:~$ lspci | grep -i nvidia
+01:00.0 VGA compatible controller: NVIDIA Corporation GP102 [GeForce GTX 1080 Ti] (rev a1)
+01:00.1 Audio device: NVIDIA Corporation GP102 HDMI Audio Controller (rev a1)
+02:00.0 VGA compatible controller: NVIDIA Corporation GP102 [GeForce GTX 1080 Ti] (rev a1)
+02:00.1 Audio device: NVIDIA Corporation GP102 HDMI Audio Controller (rev a1)
+
+john@john-All-Series:~$ uname -m && cat /etc/*release
+x86_64
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.3 LTS"
+NAME="Ubuntu"
+VERSION="18.04.3 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.3 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+
+john@john-All-Series:~$ gcc --version
+gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+john@john-All-Series:~$ sudo apt-get install linux-headers-$(uname -r)
+[sudo] password for john: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+linux-headers-5.0.0-31-generic is already the newest version (5.0.0-31.33~18.04.1).
+linux-headers-5.0.0-31-generic set to manually installed.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+```
+
+- Install CUDA from nvida website
+
+https://developer.nvidia.com/cuda-download
+
+I chose deb local install with following commands (provided in the website)
+
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pinsudo 
+mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda-repo-ubuntu1804-10-1-local-10.1.243-418.87.00_1.0-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.243-418.87.00_1.0-1_amd64.deb
+sudo apt-key add /var/cuda-repo-10-1-local-10.1.243-418.87.00/7fa2af80.pub
+sudo apt-get updatesudo apt-get -y install cuda
+```
+
+- Post Install Action - set environment path
+I add following lines into ~/.profile
+```bash
+export PATH=/usr/local/cuda-10.1/bin:/usr/local/cuda-10.1/NsightCompute-2019.1${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64\
+                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+```
+
+
